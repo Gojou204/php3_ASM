@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Session;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\UserRegisterRequest;
 
 class AuthenController extends Controller
 {
@@ -16,6 +17,8 @@ class AuthenController extends Controller
     }
 
     public function postLogin(Request $req){
+        
+
         $dataUserLogin = [
             'email' => $req->email,
             'password' => $req->password,
@@ -36,7 +39,7 @@ class AuthenController extends Controller
             }
             else{
                 // Đăng nhập vào User
-                return redirect()->route('user.books.home')->with([
+                return redirect()->route('users.dashboard')->with([
                     'message' => 'Đăng nhập thành công'
                 ]);
             }
@@ -60,7 +63,8 @@ class AuthenController extends Controller
         return view('register');
     }
 
-    public function postRegister(Request $req){
+    public function postRegister(UserRegisterRequest $req){
+
         $check = User::where('email', $req->email)->exists();
         if($check){
             return redirect()->back()->with([
@@ -71,6 +75,7 @@ class AuthenController extends Controller
                 'name' => $req->name,
                 'email' => $req->email,
                 'password' => Hash::make($req->password),
+                'password_confirmation' => $req->password_confirmation,
             ];
             $newUser = User::create($data);
 

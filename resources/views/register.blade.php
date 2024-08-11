@@ -38,16 +38,32 @@
                               <form class="mt-4 form-text" action="{{ route('postRegister') }}" method="POST">
                                 @csrf
                                   <div class="form-group">
-                                      <label for="name">Name</label>
+                                      <label for="name">Tên người dùng</label>
                                       <input type="text" class="form-control mb-0" id="exampleInputEmail1" name="name" placeholder="Nhập tên">
+                                      @error('name')
+                                          <p class="text-danger">{{ $message }}</p>
+                                      @enderror
                                   </div>
                                   <div class="form-group">
                                       <label for="email">Email</label>
                                       <input type="email" class="form-control mb-0" id="exampleInputEmail2" name="email" placeholder="Nhập email">
+                                      @error('email')
+                                          <p class="text-danger">{{ $message }}</p>
+                                      @enderror
                                   </div>
                                   <div class="form-group">
-                                      <label for="password">Password</label>
+                                      <label for="password">Mật khẩu</label>
                                       <input type="password" class="form-control mb-0" id="exampleInputPassword1" name="password" placeholder="Nhập mật khẩu">
+                                      @error('password')
+                                          <p class="text-danger">{{ $message }}</p>
+                                      @enderror
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="password_confirmation">Xác nhận mật khẩu</label>
+                                      <input type="password" class="form-control mb-0" id="exampleInputPassword1" name="password_confirmation" placeholder="Nhập lại mật khẩu">
+                                      @error('password_confirmation')
+                                          <p class="text-danger">{{ $message }}</p>
+                                      @enderror
                                   </div>
                                   <div class="d-inline-block w-100">
                                       <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">

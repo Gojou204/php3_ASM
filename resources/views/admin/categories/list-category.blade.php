@@ -17,10 +17,10 @@
                 <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">Danh sách sách</h4>
+                        <h4 class="card-title">Danh sách thể loại</h4>
                     </div>
                     <div class="iq-card-header-toolbar d-flex align-items-center">
-                        <a href="{{ route('admin.books.addBook') }}" class="btn btn-primary">Thêm sách</a>
+                        <a href="{{ route('admin.categories.addCategory') }}" class="btn btn-primary">Thêm thể loại</a>
                     </div>
                     </div>
                     @if (session('message'))
@@ -33,34 +33,20 @@
                         <table class="data-tables table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width: 3%;">STT</th>
-                                    <th style="width: 12%;">Hình ảnh</th>
-                                    <th style="width: 15%;">Tên sách</th>
-                                    <th style="width: 15%;">Thể loại sách</th>
-                                    <th style="width: 15%;">Tác giả sách</th>
-                                    <th style="width: 18%;">Mô tả sách</th>
-                                    <th style="width: 7%;">Giá</th>
-                                    <th style="width: 7%;">Số lượng</th>
-                                    <th style="width: 15%;">Hoạt động</th>
+                                    <th style="width: 5%;">STT</th>
+                                    <th style="width: 25%;">Tên thể loại</th>
+                                    <th style="width: 25%;">Hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($listBook as $key => $value)
+                                @foreach ($listCategory as $key => $value)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td><img src="{{ asset($value->image) }}" alt="{{ $value->name }}" style="width: 120px;"></td>
-                                        <td>{{ $value->name }}</td>
-                                        <td>{{ $value->category ? $value->category->name : 'No Category' }}</td>
-                                        <td>{{ $value->author ? $value->author->name : 'No Author' }}</td>
-                                        <td>
-                                        <p class="mb-0">{{ $value->description }}</p>
-                                        </td>
-                                        <td>{{ $value->price }}đ</td>
-                                        <td>{{ $value->quantity }}</td>                                        
+                                        <td>{{ $value->name }}</td>                                     
                                         <td>
                                         <div class="flex align-items-center list-user-action">
-                                            <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{ route('admin.books.updateBook', $value->book_id) }}"><i class="ri-pencil-line"></i></a>
-                                            <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xoá" href="javascript:void(0);" onclick="deleteBook({{ $value->book_id }})"><i class="ri-delete-bin-line"></i></a>
+                                            <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{ route('admin.categories.updateCategory', $value->category_id) }}"><i class="ri-pencil-line"></i></a>
+                                            <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xoá" href="javascript:void(0);" onclick="deleteCategory({{ $value->category_id }})"><i class="ri-delete-bin-line"></i></a>
                                         </div>
                                         </td>
                                     </tr>
@@ -78,9 +64,9 @@
 
 @push('scripts')
     <script>
-        function deleteBook(book_id) {
-            if (confirm('Bạn có chắc chắn muốn xóa sách này không?')) {
-                fetch(`/admin/books/${book_id}`, {
+        function deleteCategory(category_id) {
+            if (confirm('Bạn có chắc chắn muốn xóa thể loại này không?')) {
+                fetch(`/admin/categories/${category_id}`, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
